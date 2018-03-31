@@ -7,11 +7,6 @@ output: html_document
 theme: cayman
 ---
 
-# {.tabset .tabset-fade}
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 ##Introduction
 
 The movie industry has been one of the forerunners in the entertainment sector. Every year hundreds of movies get released but not all of them are successful. The aim of the project is to analyze the TMDB movie dataset which has details about the movies, their production cost and revenue generated along with rating inforamtion. We want to come up with insights by analyzing the dataset. 
