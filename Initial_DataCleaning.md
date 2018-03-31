@@ -7,17 +7,17 @@ output: html_document
 theme: cayman
 ---
 
-##Introduction
+## Introduction
 
 The movie industry has been one of the forerunners in the entertainment sector. Every year hundreds of movies get released but not all of them are successful. The aim of the project is to analyze the TMDB movie dataset which has details about the movies, their production cost and revenue generated along with rating inforamtion. We want to come up with insights by analyzing the dataset. 
 
 
-###Problem Statement
+### Problem Statement
 
 As mentioned on the [Kaggle](https://www.kaggle.com/tmdb/tmdb-movie-metadata) website, the major question we are trying to answer here is what can we say about the success of a movie before it is released? Are there certain companies (Pixar?) that have found a consistent formula? Given that major films costing over $100 million to produce can still flop, this question is more important than ever to the industry. 
 
 
-###Analysis and Business Impact proposed
+### Analysis and Business Impact proposed
 
 We are trying to analyze the dataset to find answers to the questions posed in the problem statement. We will start with a univariate analysis and then move ahead with a mutivariate analysis to understand the impact of certain factors in determining the success of the movie. The success of a movie is measured in terms of the following metrics:
 
@@ -25,7 +25,7 @@ We are trying to analyze the dataset to find answers to the questions posed in t
 * **Ratings by Public**: Which will also take into account the number of votes posted
 
 
-##Packages Required
+## Packages Required
 
 To start with the data analysis, we have used the following R packages:
 
@@ -45,20 +45,20 @@ library(DT)
 library(knitr)
 ```
 
-##Data Preparation {.tabset .tabset-fade}
+## Data Preparation {.tabset .tabset-fade}
 
-###Data Source
+### Data Source
 
-####Original Source
+#### Original Source
 The dataset is obtained from [Kaggle](https://www.kaggle.com/tmdb/tmdb-movie-metadata/data). 
 
 
-####Hosted in Github
+#### Hosted in Github
 We have downloaded the dataset from this source and hosted in our custom [GitHub profile](https://github.com/rengalv/Movies-Data-Analysis-Grab-a-Popcorn) for creating a robust source of data. This will make sure that we can even have mutiple versions of the data along with corresponding analysis making it easier for code sharing.
 
-###Data Importing
+### Data Importing
 
-####Fetching the Data from GitHub
+#### Fetching the Data from GitHub
 We perform the data importing from the github profile where we have hosted the data. The url for the data is set to the variable `url` and the data is read into the object `df` 
 
 ```{r message = FALSE, warning = FALSE}
@@ -77,7 +77,7 @@ colnames(movies)
 ```
 
 
-####Looking at the structure of the Dataset
+#### Looking at the structure of the Dataset
 
 When we examine the Structure of the dataset, we find that the columns can be in any of the following datatypes:
 
@@ -88,9 +88,9 @@ When we examine the Structure of the dataset, we find that the columns can be in
 
 We also find that even though some columns have a class as `chr`, they are actually in JSON format which needs to be converted to columns with one of the base r datatypes.
 
-###Data Cleaning
+### Data Cleaning
 
-####Removing Duplicates
+#### Removing Duplicates
 The first thing we wanted to do was to remove the duplicate values from the dataset. We did this by checking if there were two rows in the dataset that had the same movue name.
 
 ```{r }
@@ -105,7 +105,7 @@ dim(movies)
 ```
 
 
-####Working with the JSON Format
+#### Working with the JSON Format
 
 We notice from the dataset is that it has columns with data in the JSON format. So, we need to bring those columns to the base datatypes in r so that we can perform analysis.
 
@@ -121,7 +121,7 @@ We worked on converting each of these columns into separate dataframes.
 
 Since the implementation was replicable for each of the columns in the JSON format, we wrote a function to implement the same. Finally we have 5 new data frames which can then be merged with our base `movies` dataset.
 
-#####**Function to convert the JSON column to a dataframe**
+##### **Function to convert the JSON column to a dataframe**
 ```{r}
 json_to_df <- function(df, column){
   column_1 <- df[apply(df[,column],1,nchar)>2,]  
@@ -148,7 +148,7 @@ spoken_lang_df <- json_to_df(movies, "spoken_languages")
 ```
 
 
-####Merging the dataset
+#### Merging the dataset
 Now that we have created them as separate dataframes, we want to combine all these dataframes with the `movies` dataframe to get the final dataset with which we will be using for the analysis going forward
 
 For that, we first remove the JSON columns present in the `movies` dataset and then combine the new columns we have created for all the JSON columns
@@ -171,7 +171,7 @@ size <- dim(movies_new)
 ```
 We find that there are `r size[1]` observations and `r size[2]` columns.
 
-####**Missing values**
+#### **Missing values**
 
 We wanted to check there were how many rows in the data set with complete values for all  the columns. 
 
@@ -181,7 +181,7 @@ complete_data <- sum(complete.cases(movies_new))
 
 We find that there are `r complete_data` rows with no missing data in the dataset. We did not remove any of the missing values for now. We are planning to look at each column separately and see if we can perform any imputations (if required) while performing the analysis.
 
-###Data Preview
+### Data Preview
 The table below is the preview of the final dataset. We have printed the first 100 rows of the dataset. 
 
 Each row corresponds to a movie and each column is a feature corresponding to the movie.
@@ -190,7 +190,7 @@ Each row corresponds to a movie and each column is a feature corresponding to th
 datatable(head(movies_new,100))
 ```
 
-###Summary of Data
+### Summary of Data
 
 The final dataset after performing data cleaning has the following columns. The class of each of the column is also presented below.
 
@@ -206,7 +206,7 @@ kable(Data_types)
 
 ```
 
-##Proposed EDA
+## Proposed EDA
 
 
 
